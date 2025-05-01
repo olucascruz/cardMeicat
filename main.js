@@ -6,7 +6,13 @@ const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: false });
+renderer.shadowMap.enabled = false;
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+  renderer.setPixelRatio(1); // Força pixelRatio baixo em mobile
+}
+
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
@@ -42,7 +48,7 @@ loader.load('./cardmei.glb', function (gltf) {
 });
 
 
-camera.position.z = 4;
+camera.position.z = 3;
 
 // Adicionando o OrbitControls para controlar a câmera com o mouse
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -50,6 +56,7 @@ controls.enableDamping = true; // Suavizar o movimento
 controls.dampingFactor = 0.05;
 controls.enableZoom = false; // Permitir zoom
 controls.enablePan = false; // Impedir que o usuário arraste a câmera lateralmente, se quiser
+
 
 // Tornar o projeto responsivo
 window.addEventListener('resize', () => {
