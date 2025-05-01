@@ -20,7 +20,7 @@ scene.add(light);
 
 let model = null;
 
-loader.load('/cardmei.glb', function (gltf) {
+loader.load('./cardmei.glb', function (gltf) {
   console.log(gltf);
   model = gltf.scene;
 
